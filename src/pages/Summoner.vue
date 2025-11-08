@@ -13,6 +13,7 @@ const puuid = ref('')
 const matches = ref<Match[]>([])
 const chartData = ref()
 const chartOptions = ref()
+const averagePlacement = ref<number>(0)
 
 onBeforeMount(async () => {
   start()
@@ -31,6 +32,9 @@ onBeforeMount(async () => {
     8: 0
   }
 
+  let totalPlacements = 0
+  let validMatches = 0
+
   matches.value.forEach((match) => {
     const member = match.members.find((m) => m.puuid === puuid.value)
     if (!member) return
@@ -39,8 +43,12 @@ onBeforeMount(async () => {
     if (placement >= 1 && placement <= 8) {
       const key = placement
       placementCounts[key] = (placementCounts[key] ?? 0) + 1
+      totalPlacements += placement
+      validMatches++
     }
   })
+
+  averagePlacement.value = validMatches > 0 ? totalPlacements / validMatches : 0
 
   chartData.value = {
     labels: ['Top 1', 'Top 2', 'Top 3', 'Top 4', 'Top 5', 'Top 6', 'Top 7', 'Top 8'],
@@ -57,17 +65,17 @@ onBeforeMount(async () => {
           placementCounts[8]
         ],
         backgroundColor: [
-          '#34D399',
-          '#12B886',
-          '#009C73',
-          '#00805C',
-          '#006647',
-          '#004D34',
-          '#003422',
-          '#001D13'
+          '#da032d',
+          '#c2022a',
+          '#a10224',
+          '#850322',
+          '#6f0621',
+          '#5a0519',
+          '#3e010d',
+          '#2a0109'
         ],
-        borderColor: Array(8).fill('#FFFFFF'),
-        borderWidth: 2,
+        borderColor: Array(8).fill('#ffffff'),
+        borderWidth: 1,
         minBarLength: 5
       }
     ]
@@ -100,7 +108,12 @@ onBeforeMount(async () => {
 <template>
   <div class="mx-auto flex h-full w-full max-w-7xl items-center justify-center px-4">
     <div class="flex w-3/4 flex-col gap-4">
-      <h1 class="mb-4 w-full text-start text-2xl">Ultimas 20 partidas</h1>
+      <div class="mb-4 flex w-full items-center justify-between">
+        <h1 class="text-start text-2xl">Ultimas 20 partidas</h1>
+        <p class="text-lg">
+          Promedio: <span class="font-semibold">{{ averagePlacement.toFixed(2) }}</span>
+        </p>
+      </div>
       <div class="w-full">
         <Chart type="bar" :data="chartData" :options="chartOptions" />
       </div>
