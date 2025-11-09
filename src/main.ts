@@ -101,8 +101,8 @@ app.use(VueQueryPlugin, {
 	queryClientConfig: {
 		defaultOptions: {
 			queries: {
-				staleTime: 1000 * 60 * 5, // 5 minutos - los datos se consideran frescos durante 5 minutos
-				gcTime: 1000 * 60 * 10, // 10 minutos - mantener en cache por 10 minutos
+				staleTime: 1000 * 60 * 5,
+				gcTime: 1000 * 60 * 10,
 				retry: 1,
 				refetchOnWindowFocus: false
 			}
@@ -117,3 +117,17 @@ app.use(PrimeVue, {
 app.use(ToastService)
 
 app.mount('#app')
+
+document.addEventListener('DOMContentLoaded', () => {
+	const videos = document.querySelectorAll('video[autoplay]')
+	videos.forEach((video) => {
+		const videoElement = video as HTMLVideoElement
+		const playPromise = videoElement.play()
+
+		if (playPromise !== undefined) {
+			playPromise.catch((error: Error) => {
+				console.warn('Autoplay bloqueado:', error)
+			})
+		}
+	})
+})
