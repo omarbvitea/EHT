@@ -74,9 +74,9 @@ onMounted(() => {
 			loop
 			muted
 			playsinline
-			class="fixed inset-0 h-screen w-screen object-cover"
+			class="fixed inset-0 z-0 h-screen w-screen object-cover"
 		></video>
-		<div class="fixed inset-0 bg-black/40"></div>
+		<div class="fixed inset-0 z-[1] bg-black/40"></div>
 
 		<form
 			class="z-10 flex w-full max-w-md flex-col items-start gap-3 rounded-lg bg-[#18181b] p-5 shadow-2xl shadow-black/70 md:mr-12 md:mb-0 md:w-auto md:gap-4 md:p-6"
