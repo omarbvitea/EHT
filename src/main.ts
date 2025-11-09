@@ -117,17 +117,3 @@ app.use(PrimeVue, {
 app.use(ToastService)
 
 app.mount('#app')
-
-document.addEventListener('DOMContentLoaded', () => {
-	const videos = document.querySelectorAll('video[autoplay]')
-	videos.forEach((video) => {
-		const videoElement = video as HTMLVideoElement
-		const playPromise = videoElement.play()
-
-		if (playPromise !== undefined) {
-			playPromise.catch((error: Error) => {
-				console.warn('Autoplay bloqueado:', error)
-			})
-		}
-	})
-})

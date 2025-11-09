@@ -9,6 +9,7 @@ import { fetchPuuidByUserTag } from '@/services/get-puuid/get-puuid'
 const toast = useToast()
 
 const isLoading = ref(false)
+const videoRef = ref<HTMLVideoElement | null>(null)
 
 const { errors, handleSubmit, submitCount, defineField } = useForm({
 	validationSchema: searchSummonerSchema,
@@ -39,6 +40,27 @@ const onSubmit = handleSubmit(async (values) => {
 		isLoading.value = false
 	}
 })
+
+const forceVideoPlay = async () => {
+	if (!videoRef.value) return
+
+	await videoRef.value.play()
+}
+
+onMounted(() => {
+	if (videoRef.value) {
+		videoRef.value.addEventListener('loadeddata', () => {
+			void forceVideoPlay()
+		})
+		videoRef.value.addEventListener('canplay', () => {
+			void forceVideoPlay()
+		})
+
+		if (videoRef.value.readyState >= 3) {
+			void forceVideoPlay()
+		}
+	}
+})
 </script>
 
 <template>
@@ -46,6 +68,7 @@ const onSubmit = handleSubmit(async (values) => {
 		class="relative flex h-full w-full items-end justify-center overflow-hidden md:items-center md:justify-end"
 	>
 		<video
+			ref="videoRef"
 			src="/couch.mp4"
 			autoplay
 			loop
