@@ -1,7 +1,5 @@
 import type { Match } from '@/shared/types'
 
-import type { Ref } from 'vue'
-
 export const usePlacements = (matches: Ref<Match[]>, puuid: Ref<string>) => {
 	const placementCounts = computed(() => {
 		const counts: Record<number, number> = {

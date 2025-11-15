@@ -42,6 +42,7 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 
 <template>
+	<Header />
 	<div
 		class="relative flex h-full w-full items-end justify-center overflow-hidden md:items-center md:justify-end"
 	>
@@ -55,7 +56,7 @@ const onSubmit = handleSubmit(async (values) => {
 		></video>
 		<div class="fixed inset-0 z-1 bg-black/40"></div>
 		<form
-			class="z-10 flex w-full max-w-md flex-col items-start gap-3 rounded-lg bg-[#18181b] p-5 shadow-2xl shadow-black/70 md:mr-12 md:mb-0 md:w-auto md:gap-4 md:p-6"
+			class="z-10 flex w-full max-w-md flex-col items-start gap-3 rounded-2xl border border-white/10 bg-black/50 p-5 shadow-2xl shadow-black/70 backdrop-blur-xl md:mr-[8%] md:mb-0 md:w-auto md:gap-4 md:p-6"
 			@submit="onSubmit"
 		>
 			<h1 class="mb-3 text-xl font-bold text-white md:mb-5 md:text-2xl">Busca tu invocador</h1>
