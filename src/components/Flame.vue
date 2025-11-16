@@ -23,6 +23,12 @@
 </template>
 
 <script setup lang="ts">
+const THRESHOLD = {
+	MAX: 4,
+	MEDIUM: 3.5,
+	MIN: 2.5
+}
+
 const props = withDefaults(
 	defineProps<{
 		power?: number
@@ -42,22 +48,22 @@ const path3 =
 	'M729.28,1503.32c-38.95,53.74-90.93,83.67-179.28,80.12-91.2-3.66-145.64-55.12-183.56-126.62-33.61-63.38-38.27-143.16-22.41-211.12,29.51,56.03,69.53,78.81,124.15,86.19-52.44-92.69-8.56-258.44,111.8-346.2-24.02,37.43-19.07,84.99,.74,124.29,19.82,39.28,52.73,72.12,84.86,104.51,32.13,32.38,64.52,65.77,82.91,105.58,27.27,59.04,19.75,129.51-19.21,183.25Z'
 
 const colors = computed(() => {
-	if (props.power >= 4) return ['#555555', '#777777', '#999999']
-	if (props.power >= 3) return ['#d33d3d', '#ff884d', '#ffcf57']
-	if (props.power >= 2) return ['#d33d3d', '#ff884d', '#ffcf57']
+	if (props.power >= THRESHOLD.MAX) return ['#555555', '#777777', '#999999']
+	if (props.power >= THRESHOLD.MEDIUM) return ['#d33d3d', '#ff884d', '#ffcf57']
+	if (props.power >= THRESHOLD.MIN) return ['#d33d3d', '#ff884d', '#ffcf57']
 	return ['#1f4fcc', '#4db8ff', '#e6faff']
 })
 
 const flickerColor = computed(() => {
-	if (props.power >= 4) return '#77777780'
-	if (props.power >= 3) return '#ff884d50'
-	if (props.power >= 2) return '#ff884d80'
+	if (props.power >= THRESHOLD.MAX) return '#77777780'
+	if (props.power >= THRESHOLD.MEDIUM) return '#ff884d50'
+	if (props.power >= THRESHOLD.MIN) return '#ff884d80'
 	return '#82CAFA'
 })
 
 const size = computed(() => {
-	if (props.power >= 3) return props.size * 0.75
-	if (props.power == 1) return props.size * 1.2
+	if (props.power >= THRESHOLD.MAX) return props.size * 0.75
+	if (props.power >= THRESHOLD.MIN) return props.size * 1.2
 	return props.size
 })
 </script>
